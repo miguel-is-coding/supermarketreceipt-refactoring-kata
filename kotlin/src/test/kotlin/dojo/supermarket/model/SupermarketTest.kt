@@ -1,6 +1,9 @@
 package dojo.supermarket.model
 
+import org.approvaltests.Approvals
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import supermarket.ReceiptPrinter
 import supermarket.model.*
 
 class SupermarketTest {
@@ -22,6 +25,14 @@ class SupermarketTest {
 
         val receipt = teller.checksOutArticlesFrom(cart)
 
-        // Todo: complete this test
+    // ASSERT
+        assertEquals(4.975, receipt.totalPrice!!, 0.01)
+        assertEquals(emptyList<Discount>(), receipt.getDiscounts())
+        assertEquals(1, receipt.getItems().size)
+        val receiptItem = receipt.getItems()[0]
+        assertEquals(apples, receiptItem.product)
+        assertEquals(1.99, receiptItem.price)
+        assertEquals(2.5 * 1.99, receiptItem.totalPrice)
+        assertEquals(2.5, receiptItem.quantity)
     }
 }
